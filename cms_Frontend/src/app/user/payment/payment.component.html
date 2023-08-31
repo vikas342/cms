@@ -1,0 +1,48 @@
+<p>payment works!</p>
+{{data|json}}
+
+
+<div class="container " *ngFor="let x of data ">
+  <div class="row   border border-3   ">
+
+    <div class=" col col-md-6">
+
+      <img [src]="x.image" [alt]="x.image" class="d-block   " style="object-fit: fill; width: 400px; height: 400px;">
+
+    </div>
+    <div class="col col-md-6 my-auto  ">
+
+      <p class="fs-2">Event : {{x.title}}</p>
+      <p class="fs-2">Date : {{x.date|date}}</p>
+      <p class="fs-2">Address : {{x.buildingname}},{{x.state}},{{x.city}},{{x.pincode}}</p>
+
+    </div>
+
+
+
+  </div>
+
+  <div class="mt-5   ">
+
+
+
+
+    <p class="fw-bold ">Fill It For Confirming Your Presence:</p>
+    <form [formGroup]="paymentform" class="w-50 " (ngSubmit)="paymentform_submit()">
+
+      <div class="formgroup">
+        <label for="name">Your Name:</label>
+        <input type="text" formControlName="name" id="name" class="form-control">
+      </div>
+      <div class="formgroup">
+        <label for="email">Your Email:</label>
+        <input type="email" formControlName="email" id="email" class="form-control">
+      </div>
+      <br>
+      <button type="submit" class="btn bg-primary text-white  "  [disabled]="!paymentform.valid">Confirm</button>
+    </form>
+  </div>
+
+
+
+</div>

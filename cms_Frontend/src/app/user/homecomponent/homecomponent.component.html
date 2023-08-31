@@ -1,0 +1,34 @@
+<!-- <p>home</p>
+
+
+{{
+data|json
+}} -->
+
+
+<br>
+<div class="container">
+
+  <p class="text-center fs-2 bg-primary w-100 m-2 text-white  ">List of Events</p>
+</div>
+<div class="container" *ngFor="let x of data">
+  <div class="row">
+
+    <div class="card mb-3" (click)="view(x.cid)">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img [src]="x.image" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8 text-center ">
+          <div class="card-body mt-5">
+            <h2 class="card-title ">Event : {{x.title}}</h2>
+            <h2 class="card-text"> On : {{x.date |date}}</h2>
+            <h2 class="card-text"> Address : {{x.buildingname}},{{x.state}},{{x.city}},{{x.pincode}}</h2>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

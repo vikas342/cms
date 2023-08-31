@@ -1,0 +1,31 @@
+<!-- <p>orders works!</p> -->
+<!-- {{data|json}} -->
+
+<div class="container">
+
+  <p class="text-center fs-2 bg-primary w-100 m-2 text-white  ">User Orders</p>
+</div>
+
+<div class="container" *ngFor="let x of data">
+  <div class="row">
+
+    <div class="card mb-3" >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img [src]="x.cimage" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8 text-center ">
+          <div class="card-body mt-5">
+            <h2 class="card-title ">OrderId : {{x.orderid}}</h2>
+
+            <h2 class="card-title ">Event : {{x.ctitle}}</h2>
+            <h2 class="card-text">Booked On : {{x.cdate |date}}</h2>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

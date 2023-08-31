@@ -1,0 +1,285 @@
+<div class="container m-5 border border-2 rounded-3 mx-auto ">
+  <p class="text-center fs-3">Fill Form For Add Event</p>
+
+  <!-- adressdetails -->
+  <form
+    [formGroup]="adressdetails"
+    (ngSubmit)="adressdetails_Submit()"
+    *ngIf="adressdetails_visiblity"
+    class="p-5 w-50 mx-auto"
+  >
+    <p
+      class="fs-2"
+      style="
+        text-decoration: underline;
+        text-decoration-color: blue
+      "
+    >
+      Address Details
+    </p>
+
+    <div class="form-group">
+      <label for="buildingname">Building Name:</label>
+      <input
+        type="text"
+        formControlName="buildingname"
+        placeholder="Vandematram Fabulo"
+        id="buildingname"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="state">State:</label>
+      <select formControlName="state" class="form-select" #val>
+        <option selected disabled>Select state</option>
+        <option *ngFor="let x of state" [value]="x.id">{{ x.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="city">City:</label>
+      <select formControlName="city" class="form-select">
+        <option selected disabled>Select city</option>
+
+        <ng-container *ngFor="let x of cities">
+          <option *ngIf="x.typeid == val.value" [value]="x.id">
+            {{ x.name }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="pincode">Pincode:</label>
+      <input
+        type="text"
+        formControlName="pincode"
+        placeholder="380015"
+        id="pincode"
+        class="form-control"
+      />
+    </div>
+
+    <br />
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!adressdetails.valid"
+    >
+      Next
+    </button>
+  </form>
+
+  <form
+    [formGroup]="confdetails"
+    (ngSubmit)="confdetails_Submit()"
+    *ngIf="confdetails_visiblity"
+    class="p-5 w-50 mx-auto"
+  >
+    <p
+      class="fs-2"
+      style="
+        text-decoration: underline;
+        text-decoration-color: blue
+      "
+    >
+      Conference Details
+    </p>
+
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="React conference "
+        id="title"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="food">Food:</label>
+      <input
+        type="text"
+        formControlName="food"
+        placeholder="e.g. pizza,sandwich"
+        id="food"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="date">Conference Date:</label>
+      <input
+        type="date"
+        formControlName="date"
+        id="date"
+        class="form-control"
+        [min]="currentDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="image">Conference Poster:</label>
+      <input
+        type="file"
+        formControlName="image"
+        id="image" (change)="fileadd($event)"
+        class="form-control"
+      />
+    </div>
+
+    <br />
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!confdetails.valid"
+    >
+      Next
+    </button>
+  </form>
+
+  <form
+    [formGroup]="hoteldetails"
+    (ngSubmit)="hoteldetails_Submit()"
+    *ngIf="hotels_visiblity"
+    class="p-5 w-50 mx-auto"
+  >
+    <p
+      class="fs-2"
+      style="
+        text-decoration: underline;
+        text-decoration-color: blue
+      "
+    >
+      Hotel Arrangment For Participants
+    </p>
+
+    <div class="form-group">
+      <label for="hname">Hotel Name:</label>
+      <input
+        type="text"
+        formControlName="hname"
+        placeholder="JW Marriott"
+        id="hname"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="state">State:</label>
+      <select formControlName="state" class="form-select" #val>
+        <option selected disabled>Select state</option>
+        <option *ngFor="let x of state" [value]="x.id">{{ x.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="city">City:</label>
+      <select formControlName="city" class="form-select">
+        <option selected disabled>Select city</option>
+
+        <ng-container *ngFor="let x of cities">
+          <option *ngIf="x.typeid == val.value" [value]="x.id">
+            {{ x.name }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+
+    <br />
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!hoteldetails.valid"
+    >
+      Next
+    </button>
+  </form>
+
+  <!-- propImages_Submit -->
+  <form
+    [formGroup]="speakerdetails"
+    *ngIf="speakersdetails_visiblity"
+    class="p-5 w-50 mx-auto"
+  >
+    <p
+      class="fs-2"
+      style="
+        text-decoration: underline;
+        text-decoration-color: blue
+      "
+    >
+      Add Speakers
+    </p>
+    <br />
+
+    <div class="form-group" formArrayName="speakers">
+      <ng-container *ngFor="let x of getspeakes.controls; let i = index">
+        <div [formGroupName]="i" class="fs-5 mt-3">
+          <p>{{i+1}}.</p>
+          <!-- <label for="i">IMAGE {{i+1}}.</label>
+            <input type="file" name="i" id="i" formControlName="imageurl" class="  form-control"  (change)="fileadd($event,i)" > -->
+
+          <div class="form-group">
+            <label for="name">Speaker Name:</label>
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Vandematram Fabulo"
+              id="name"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="name">Speaker Photo:</label>
+            <input
+              type="file" (change)="addspeakerphoto($event)"
+              formControlName="image"
+              id="image"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="intime">Speaker Intime:</label>
+            <input
+              type="datetime-local"
+              formControlName="intime"
+              id="intime"
+              class="form-control"
+              [min]="currentDateTime"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="outtime">Speaker OutTime:</label>
+            <input
+              type="datetime-local"
+              formControlName="outtime"
+              id="outtime"
+              class="form-control"
+              [min]="currentDateTime"
+            />
+          </div>
+        </div>
+      </ng-container>
+
+      <button (click)="addmoreImages()" class="btn btn-primary mt-5">
+        Add More
+      </button>
+    </div>
+
+    <br />
+    <button
+      class="btn btn-warning w-100"
+      (click)="submitted()"
+      type="submit"
+      [disabled]="!speakerdetails.valid"
+    >
+      submit
+    </button>
+  </form>
+</div>

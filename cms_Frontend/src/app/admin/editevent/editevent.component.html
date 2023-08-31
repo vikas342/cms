@@ -1,0 +1,503 @@
+<!-- <p>editevent works!</p>-->
+  {{ data | json }}
+
+<div class="container w-75 mx-auto" *ngFor="let x of data">
+  <div class="mt-5 norder border border-2 p-3 rounded-3">
+    <p class="fw-bold fs-4">Conference Details</p>
+
+    <img
+      [src]="x.image"
+      [alt]="x.image"
+      class="   "
+      style="object-fit: fill; width: 400px; height: 400px"
+
+    />
+
+    <p>Title: {{ x.title }}</p>
+    <p>Food: {{ x.food }}</p>
+    <p>Date: {{ x.date |date }}</p>
+
+    <p class="text-end m-4">
+      <button
+      (click)="edit_conf()"
+        class="btn btn-danger m-2"
+        data-bs-toggle="modal"
+        data-bs-target="#confModal"
+      >
+        Edit
+      </button>
+    </p>
+  </div>
+
+  <div class="mt-5 norder border border-2 p-3 rounded-3">
+    <p class="fw-bold fs-4">Address Details</p>
+
+
+    <p>Building Name: {{x.buildingname}}</p>
+    <p>City: {{x.city}}</p>
+    <p>State: {{x.state}}</p>
+    <p>Pincode: {{x.pincode}}</p>
+
+    <p class="text-end m-4">
+      <button
+      (click)="edit_add()"
+        class="btn btn-danger m-2"
+        data-bs-toggle="modal"
+        data-bs-target="#editadd"
+      >
+        Edit
+      </button>
+    </p>
+  </div>
+
+
+  <div class="mt-5 norder border border-2 p-3 rounded-3">
+    <p class="fw-bold fs-4">Hotel Details</p>
+
+    <ng-container *ngFor="let z of x.hotels">
+
+    <p>Hotel Name: {{z.hname}}</p>
+    <p>City: {{x.city}}</p>
+    <p>State: {{x.state}}</p>
+
+
+    <p class="text-end m-4">
+      <button
+      (click)="edit_hotel()"
+        class="btn btn-danger m-2"
+        data-bs-toggle="modal"
+        data-bs-target="#edithotel"
+      >
+        Edit
+      </button>
+    </p>
+  </ng-container>
+  </div>
+
+
+
+
+  <div class="mt-5 norder border border-2 p-3 rounded-3">
+    <p class="fw-bold fs-4">Speakers Details</p>
+
+    <div class="row justify-content-evenly ">
+    <div class="col-md-4" *ngFor="let z of x.speakers;let i= index">
+
+
+      <div class="card text-start m-1 ">
+        <img class="card-img-top" [src]="z.image" alt="z.image">
+        <div class="card-body">
+          <p>{{z.name}}</p>
+        <p>Intime:{{z.intime | date: 'dd/MM/yyyy hh:mm a'}}</p>
+        <p>Outtime:{{z.outtime | date: 'dd/MM/yyyy hh:mm a'}}</p>
+        <p class="text-end"><button class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#spekeredit" (click)="edit_speakers(z.sid,i)">Edit</button></p>
+        <p class="text-end"><button class="btn btn-warning " data-bs-toggle="modal"   (click)="delete_speakers(z.sid)">Delete</button></p>
+
+
+      </div>
+    </div>
+
+
+    </div>
+  </div>
+  <p><button class="btn bg-primary mt-3 text-white" data-bs-toggle="modal" data-bs-target="#addspeaker">Add speaker</button></p>
+
+
+
+  </div>
+</div>
+
+
+<!-- Modal trigger button -->
+
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="addspeaker" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form
+        [formGroup]="speakerdetails"
+
+
+      >
+      <div class="form-group">
+        <label for="pincode">Speaker image:</label>
+        <input
+          type="file"
+          formControlName="image"
+          (change)="fileadd($event)"
+          id="image"
+          class="form-control"
+        />
+      </div>
+
+        <div class="form-group">
+          <label for="buildingname">Speaker Name:</label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Bassi"
+            id="name"
+            class="form-control"
+          />
+        </div>
+
+
+
+        <div class="form-group">
+          <label for="intime">Intime:</label>
+          <input
+            type="datetime-local"
+            formControlName="intime"
+
+            id="intime"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="outtime">Outtime:</label>
+          <input
+            type="datetime-local"
+            formControlName="outtime"
+
+            id="outtime"
+            class="form-control"
+          />
+        </div>
+
+        <br />
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!speakerdetails.valid" (click)="addspeaker()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="spekeredit" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form
+        [formGroup]="speakerdetails"
+
+
+      >
+      <div class="form-group">
+        <label for="pincode">Speaker image:</label>
+        <input
+          type="file"
+          formControlName="image"
+          (change)="fileadd($event)"
+
+          id="image"
+          class="form-control"
+        />
+      </div>
+
+        <div class="form-group">
+          <label for="buildingname">Speaker Name:</label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Bassi"
+            id="name"
+            class="form-control"
+          />
+        </div>
+
+
+
+        <div class="form-group">
+          <label for="intime">Intime:</label>
+          <input
+            type="datetime-local"
+            formControlName="intime"
+
+            id="intime"
+            class="form-control"               [min]="currentDateTime"
+
+          />
+        </div>
+        <div class="form-group">
+          <label for="outtime">Outtime:</label>
+          <input
+            type="datetime-local"
+            formControlName="outtime"
+
+            id="outtime"
+            class="form-control"               [min]="currentDateTime"
+
+          />
+        </div>
+
+        <br />
+
+      </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-dismiss="modal" (click)="speaker_submit()" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div
+  class="modal fade"
+  id="confModal"
+  tabindex="-1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="confdetails">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input
+              type="text"
+              formControlName="title"
+              placeholder="React conference "
+              id="title"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="food">Food:</label>
+            <input
+              type="text"
+              formControlName="food"
+              placeholder="e.g. pizza,sandwich"
+              id="food"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="date">Conference Date:</label>
+            <input
+              type="date"
+              formControlName="date"
+              id="date"
+              class="form-control"
+        [min]="currentDate"
+
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="image">Conference Poster:</label>
+            <input
+              type="file"
+              formControlName="image"
+              id="image"
+              class="form-control" (change)="fileadd($event)"
+            />
+          </div>
+
+          <br />
+        </form>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="confdetails_Submit()"
+            [disabled]="!confdetails.valid"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="editadd" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <form
+          [formGroup]="adressdetails"
+
+
+        >
+
+          <div class="form-group">
+            <label for="buildingname">Building Name:</label>
+            <input
+              type="text"
+              formControlName="buildingname"
+              placeholder="Vandematram Fabulo"
+              id="buildingname"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="state">State:</label>
+            <select formControlName="state" class="form-select" #val>
+              <option selected disabled>Select state</option>
+              <option *ngFor="let x of state" [value]="x.id">{{ x.name }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="city">City:</label>
+            <select formControlName="city" class="form-select">
+              <option selected disabled>Select city</option>
+
+              <ng-container *ngFor="let x of cities">
+                <option *ngIf="x.typeid == val.value" [value]="x.id">
+                  {{ x.name }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pincode">Pincode:</label>
+            <input
+              type="text"
+              formControlName="pincode"
+              placeholder="380015"
+              id="pincode"
+              class="form-control"
+            />
+          </div>
+
+          <br />
+
+        </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!adressdetails.valid" (click)="adress_submit()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="edithotel" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <form
+          [formGroup]="hoteldetails"
+
+
+        >
+
+          <div class="form-group">
+            <label for="hname">Hotel Name:</label>
+            <input
+              type="text"
+              formControlName="hname"
+              placeholder="Jw Marriott"
+              id="hname"
+              class="form-control"
+            />
+          </div>
+
+
+          <div class="form-group">
+            <label for="state">State:</label>
+            <select formControlName="state" class="form-select" #val>
+              <option selected disabled>Select state</option>
+              <option *ngFor="let x of state" [value]="x.id">{{ x.name }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="city">City:</label>
+            <select formControlName="city" class="form-select">
+              <option selected disabled>Select city</option>
+
+              <ng-container *ngFor="let x of cities">
+                <option   [value]="x.id">
+                  {{ x.name }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+
+
+
+          <br />
+
+        </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!hoteldetails.valid" (click)="hotel_submit()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

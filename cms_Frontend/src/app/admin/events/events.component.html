@@ -1,0 +1,69 @@
+<!-- <p>events works!</p>
+{{data|json}} -->
+
+
+
+<ng-container *ngFor="let x of data">
+
+  <div class="row my-5  mx-2  ">
+    <div class="card ">
+      <div class="row p-3">
+        <!-- <div class="col-md-4 " (click)="propview(x.prop_Id)"> -->
+        <div class="col-md-4 " >
+
+          <img src="{{ x.image}} " alt="prop_Image" class="card-img custom-img" style="object-fit: fill;    height: 250px;">
+          <br />
+          <p class="fs-4">Title: {{ x.title }}</p>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-8">
+
+
+              <!-- <div (click)="propview(x.prop_Id)"> -->
+              <div>
+
+                <p class="card-text">
+                  <span class="fw-bold">Address: </span>{{ x.buildingname }},{{
+                  x.city
+                  }},{{ x.state }},{{ x.pincode }}
+                </p>
+                <p class="card-text">
+                  <small class="text-body-secondary"><span class="fw-bold">Date :</span>
+                    {{ x.date }}</small>
+                </p>
+                <p class="card-text">
+                  <small class="text-secondary">
+                    {{ x.prop_desc }}</small>
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+
+
+
+              <p>
+                <button class="btn btn-white border border-2 border-danger text-danger p-2 rounded-3"
+                  data-bs-toggle="modal" (click)="edit(x.cid)" >
+                  Edit
+                </button>
+              </p>
+
+              <p>
+                <button class="btn btn-danger p-2 rounded-3" (click)="delete(x.cid)" >
+                  Delete
+                </button>
+              </p>
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

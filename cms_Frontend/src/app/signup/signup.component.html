@@ -1,0 +1,41 @@
+
+<div class="d-flex justify-content-center">
+
+  <form (ngSubmit)="onsubmit()" [formGroup]="signup_form" class=" w-md-100 w-sm-100  m-5 border border-3 p-5 bg-light rounded-5">
+
+
+<!-- <form (ngSubmit)="onsubmit()" [formGroup]="signup_form" class="w-50 mx-auto border border-2 p-5 bg-light rounded-5"> -->
+  <div class="form-group m-2  d-flex justify-content-between">
+    <p class="fw-bolder h2 "> Sign up</p>
+  </div>
+
+
+  <div class="form-group m-2">
+
+    <label for="uname">Username :</label>
+
+    <input type="text" name="uname" id="uname" formControlName="Uname" class="form-control">
+  </div>
+  <div class="form-group m-2">
+    <label for="uemail">Enter Email ID:</label>
+    <input type="text" name="uemail" id="uemail" formControlName="Email" class="form-control">
+  </div>
+  <div class="form-group m-2">
+
+    <label for="pass">Password :</label>
+
+    <input type="password" name="pass" id="pass" formControlName="Password" class="form-control">
+  </div>
+<br>
+  <div class="form-group m-2 ">
+    <button type="submit" class="btn btn-primary w-100">Register</button>
+  </div>
+
+  <div class="text-center mt-5">
+
+    <p>
+      <a routerLink="/login" class="text-decoration-none text-dark"> Alredy have an Account?</a>
+    </p>
+  </div>
+</form>
+</div>
